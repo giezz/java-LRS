@@ -1,0 +1,29 @@
+.gitingore
+
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+# Project exclude paths
+/lab8/target/
+/lab9/target/
+/lab11/target/
+/target/
