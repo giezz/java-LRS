@@ -59,6 +59,7 @@ public abstract class AnnotationHandler {
             case "int":
                 return DataType.INTEGER;
             case "String":
+            case "Enum":
                 return DataType.TEXT;
             default:
                 return null;

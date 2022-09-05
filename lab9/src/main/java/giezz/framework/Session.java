@@ -28,7 +28,7 @@ public abstract class Session {
         }
         buildCommand.deleteCharAt(buildCommand.length() - 2).append(") VALUES ( ");
         for (Object value : values) {
-            if (value instanceof String) {
+            if (value instanceof String || value instanceof Enum) {
                 buildCommand.append("'").append(value).append("'").append(", ");
             } else {
                 buildCommand.append(value).append(", ");

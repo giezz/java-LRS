@@ -1,9 +1,6 @@
 package giezz;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Lab8Main {
@@ -12,10 +9,13 @@ public class Lab8Main {
 //        List<Integer> integerList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 4, 4, 4, 5, 5, 5, 6));
         List<String> words = new ArrayList<>(Arrays.asList("a", "b", "c", "c", "d", "d", "d", "r"));
 
-        System.out.println(words.stream()
-                .distinct()
-                .map(x -> Collections.frequency(words, x))
-                .collect(Collectors.toList()));
+        Map<String, Long> wordsByCount = words.stream()
+                .collect(Collectors.groupingBy(String::valueOf, Collectors.counting()));
+
+        String prevalentWord = wordsByCount.entrySet().stream()
+                .max(Map.Entry.comparingByValue()).orElseThrow().getKey();
+
+        System.out.println(prevalentWord);
 
         List<Person> personList = new ArrayList<>(Arrays.asList(
                 new Person("bob1", 24, 73000, Person.Position.ENGINEER),
