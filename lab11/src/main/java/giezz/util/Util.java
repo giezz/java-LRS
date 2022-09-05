@@ -1,8 +1,10 @@
 package giezz.util;
 
 import giezz.entity.Client;
+import giezz.entity.OrderInfo;
 import giezz.entity.Product;
 import giezz.service.ClientService;
+import giezz.service.OrderInfoService;
 import giezz.service.ProductService;
 
 import java.util.stream.Collectors;
@@ -49,11 +51,7 @@ public class Util {
 //        );
 //    }
 //
-//    public static void buy(int clientId, int productId) {
-//        ClientService.addProductToClient(clientId, productId);
-//    }
-//
-//    public static void buy(Client client, Product product) {
-//        ClientService.addProductToClient(client.getId(), product.getId());
-//    }
+    public static void buy(Client client, Product product) {
+        OrderInfoService.create(new OrderInfo(client, product));
+    }
 }

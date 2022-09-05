@@ -7,6 +7,7 @@ import giezz.service.ClientService;
 import giezz.service.OrderInfoService;
 import giezz.service.ProductService;
 import giezz.util.HibernateUtil;
+import giezz.util.Util;
 
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class Main {
                         .map(Product::getName)
                         .collect(Collectors.toList())
         );
-        OrderInfoService.create(new OrderInfo(client, product));
+        Util.buy(client, product);
         HibernateUtil.sessionFactory.close();
     }
 }
