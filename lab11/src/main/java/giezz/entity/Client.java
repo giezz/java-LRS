@@ -1,10 +1,9 @@
 package giezz.entity;
 
-import giezz.service.ProductService;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -16,13 +15,8 @@ public class Client {
     @Column(name = "client_name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "client_product",
-            joinColumns = @JoinColumn(name = "client_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "client")
+    private Set<OrderInfo> orders = new HashSet<>();
 
     public Client(String name) {
         this.name = name;
@@ -47,15 +41,11 @@ public class Client {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Set<OrderInfo> getOrders() {
+        return orders;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public void addProduct(Product product) {
-        products.add(product);
+    public void setOrders(Set<OrderInfo> orders) {
+        this.orders = orders;
     }
 }

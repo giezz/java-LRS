@@ -3,7 +3,9 @@ package giezz.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -17,8 +19,8 @@ public class Product {
 
     private double cost;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Client> clients = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private Set<OrderInfo> orders = new HashSet<>();
 
     public Product(String name, double cost) {
         this.name = name;
@@ -52,11 +54,11 @@ public class Product {
         this.cost = cost;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public Set<OrderInfo> getOrders() {
+        return orders;
     }
 
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
+    public void setOrders(Set<OrderInfo> orders) {
+        this.orders = orders;
     }
 }
