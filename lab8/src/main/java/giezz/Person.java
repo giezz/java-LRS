@@ -7,11 +7,14 @@ public class Person {
     private double salary;
     private Position position;
 
-    public Person(String name, int age, double salary, Position position) {
+    private Gender gender;
+
+    public Person(String name, int age, double salary, Position position, Gender gender) {
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.position = position;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -46,7 +49,19 @@ public class Person {
         this.salary = salary;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     enum Position {
         ENGINEER, MANAGER, CEO
+    }
+
+    enum Gender {
+        MALE, FEMALE
     }
 }
