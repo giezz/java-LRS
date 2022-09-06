@@ -17,6 +17,9 @@ public class OrderInfo {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name = "order_cost")
+    private double cost;
+
     public OrderInfo(Client client, Product product) {
         this.client = client;
         this.product = product;
@@ -39,5 +42,14 @@ public class OrderInfo {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @Override
+    public String toString() {
+        return "Заказ номер " + id +
+                ", имя клиента =" + client.getName() +
+                ", название продукта =" + product.getName() +
+                ", стоимость заказа = " + cost +
+                "\n";
     }
 }

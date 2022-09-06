@@ -61,4 +61,13 @@ public class Product {
     public void setOrders(Set<OrderInfo> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                '}';
+    }
 }

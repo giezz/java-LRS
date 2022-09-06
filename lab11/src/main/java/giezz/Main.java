@@ -14,18 +14,13 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-//        ClientService.addProductToClient(3, 3);
-//        buy(3 ,3);
-//        ClientService.create(new Client("Hrusha"));
+//        ClientService.create(new Client("Misha"));
+////        ProductService.create(new Product("Phone", 200));
         Client client = ClientService.get(1);
         Product product = ProductService.get(1);
-        System.out.println(
-                client.getOrders().stream()
-                        .map(OrderInfo::getProduct)
-                        .map(Product::getName)
-                        .collect(Collectors.toList())
-        );
         Util.buy(client, product);
+        System.out.println(
+                OrderInfoService.getAllOrdersByClient(client));
         HibernateUtil.sessionFactory.close();
     }
 }
