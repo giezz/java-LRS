@@ -43,8 +43,7 @@ public class Lab8Main {
 
         System.out.println(
                 personList.stream()
-                        .filter(person -> person.getGender() == Person.Gender.MALE)
-                        .filter(person -> person.getPosition() == Person.Position.ENGINEER)
+                        .filter(person -> person.getGender() == Person.Gender.MALE && person.getPosition() == Person.Position.ENGINEER)
                         .sorted((o1, o2) -> o2.getAge() - o1.getAge())
                         .limit(3)
                         .sorted((o1, o2) -> (int) (o2.getSalary() - o1.getSalary()))
