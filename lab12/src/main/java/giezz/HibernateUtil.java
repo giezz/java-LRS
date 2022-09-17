@@ -10,6 +10,4 @@ public class HibernateUtil {
     public static SessionFactory sessionFactory = new Configuration()
             .addAnnotatedClass(Item.class)
             .buildSessionFactory();
-
-    public static Session session;
 }

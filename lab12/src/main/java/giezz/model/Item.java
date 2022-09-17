@@ -1,6 +1,7 @@
 package giezz.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OptimisticLock;
 
 @Entity
 @Table(name = "item")
@@ -9,6 +10,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+//    @OptimisticLock(excluded =  true )
     private long val;
 
     public Item() {
