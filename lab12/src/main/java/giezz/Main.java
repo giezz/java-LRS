@@ -22,21 +22,26 @@ public class Main {
 
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(() -> {
+                boolean isUpdated;
                 Session session = sessionFactory.openSession();
                 for (int j = 0; j < 20000; j++) {
-                    try {
-                        session.beginTransaction();
-                        Item item = session.get(Item.class, (long) (Math.random() * 40 + 1));
-                        item.setVal(item.getVal() + 1);
-                        session.persist(item);
-                        session.getTransaction().commit();
-                        System.out.println(Thread.currentThread().getName() + " commited");
-                        updateCount.getAndIncrement();
-                    } catch (HibernateException | OptimisticLockException e) {
-                        session.getTransaction().rollback();
-                        System.out.println(Thread.currentThread().getName() + " rollback");
-                        System.err.println("in " + Thread.currentThread().getName() + " " + e.getMessage());
-                        rollbackCount.getAndIncrement();
+                    isUpdated = false;
+                    while (!isUpdated){
+                        try {
+                            session.beginTransaction();
+                            Item item = session.get(Item.class, (long) (Math.random() * 40 + 1));
+                            item.setVal(item.getVal() + 1);
+                            session.persist(item);
+                            session.getTransaction().commit();
+                            System.out.println(Thread.currentThread().getName() + " commited");
+                            updateCount.getAndIncrement();
+                            isUpdated = true;
+                        } catch (HibernateException | OptimisticLockException e) {
+                            session.getTransaction().rollback();
+                            System.out.println(Thread.currentThread().getName() + " rollback");
+                            System.err.println("in " + Thread.currentThread().getName() + " " + e.getMessage());
+                            rollbackCount.getAndIncrement();
+                        }
                     }
                     try {
                         Thread.sleep(5);
