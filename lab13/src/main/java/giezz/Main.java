@@ -25,5 +25,6 @@ public class Main {
 
         OrderService orderService = context.getBean(OrderService.class);
         orderService.createOrder();
+        orderService.createOrder(ProductService.findByTitle("Name 1"), ProductService.findByTitle("Name 2"));
     }
 }
