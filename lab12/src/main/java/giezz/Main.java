@@ -21,13 +21,6 @@ public class Main {
         optimisticWrite();
         long endOptimisticWrite = System.currentTimeMillis() - startTime;
         startTime = System.currentTimeMillis();
-//        Session session = sessionFactory.openSession();
-//        session.beginTransaction()
-//        Query query = session.createQuery("UPDATE Item SET val = 0");
-//        Query query2 = session.createQuery("UPDATE Item SET version = 0");
-//        query.executeUpdate();
-//        query2.executeUpdate();
-//        session.close();
         pessimisticWrite();
         long endPessimisticWrite = System.currentTimeMillis() - startTime;
         System.out.println("optimistic time " + endOptimisticWrite);
@@ -51,11 +44,10 @@ public class Main {
                         try {
                             session.beginTransaction();
                             Item item = session
-                                    .createQuery("from Item item where id = :id ", Item.class)
+                                    .createQuery("from Item where id = :id ", Item.class)
                                     .setParameter("id", (long) (Math.random() * 40 + 1))
                                     .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                                     .getSingleResult();
-//                                    .get(Item.class, (long) (Math.random() * 40 + 1));
                             item.setVal(item.getVal() + 1);
                             session.persist(item);
                             session.getTransaction().commit();
