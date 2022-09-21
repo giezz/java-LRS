@@ -1,5 +1,6 @@
 package giezz;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
@@ -13,9 +14,11 @@ public class Car implements Runnable {
     private Race race;
     private int speed;
     private String name;
-    private CyclicBarrier cyclicBarrier;
-    private CountDownLatch countDownLatch;
+    private static CountDownLatch countDownLatch;
+    private static CountDownLatch countDownLatchForFinish;
+    private static CyclicBarrier cyclicBarrier;
     private static int carPositionOnFinish = 0;
+
 
     public String getName() {
         return name;
@@ -25,11 +28,9 @@ public class Car implements Runnable {
         return speed;
     }
 
-    public Car(Race race, int speed, CyclicBarrier cyclicBarrier, CountDownLatch countDownLatch) {
+    public Car(Race race, int speed) {
         this.race = race;
         this.speed = speed;
-        this.cyclicBarrier = cyclicBarrier;
-        this.countDownLatch = countDownLatch;
         CARS_COUNT++;
         this.name = "Участник #" + CARS_COUNT;
     }
@@ -38,38 +39,50 @@ public class Car implements Runnable {
     public void run() {
         try {
             System.out.println(this.name + " готовится");
+            cyclicBarrier.await();
             Thread.sleep(500 + (int) (Math.random() * 800));
-            cyclicBarrier.await();
             System.out.println(this.name + " готов");
+            countDownLatch.countDown();
             cyclicBarrier.await();
+//            cyclicBarrier.reset();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         for (int i = 0; i < race.getStages().size(); i++) {
-            try {
-                if (race.getStages().indexOf(race.getStages().get(i)) != race.getStages().size() - 1) {
-                    race.getStages().get(i).go(this);
-                    countDownLatch.countDown();
-                    countDownLatch.await();
-                } else {
-                    race.getStages().get(i).go(this);
-                    carPositionOnFinish++;
-                    switch (carPositionOnFinish) {
-                        case 1:
-                            System.out.println(name + "WINNER");
-                            break;
-                        case 2:
-                            System.out.println(name + "SECOND PLACE");
-                            break;
-                        case 3:
-                            System.out.println(name + "THIRD PLACE");
-                            break;
-                    }
+            if (race.getStages().indexOf(race.getStages().get(i)) != race.getStages().size() - 1) {
+                race.getStages().get(i).go(this);
+            } else {
+                race.getStages().get(i).go(this);
+                carPositionOnFinish++;
+                switch (carPositionOnFinish) {
+                    case 1:
+                        System.out.println(name + " WINNER");
+                        break;
+                    case 2:
+                        System.out.println(name + " SECOND PLACE");
+                        break;
+                    case 3:
+                        System.out.println(name + " THIRD PLACE");
+                        break;
+                    default:
+                        System.out.println(name + " position " + carPositionOnFinish);
                 }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
+        countDownLatchForFinish.countDown();
     }
+
+    public static void setCountDownLatch(CountDownLatch countDownLatch) {
+        Car.countDownLatch = countDownLatch;
+    }
+
+    public static void setCyclicBarrier(CyclicBarrier cyclicBarrier) {
+        Car.cyclicBarrier = cyclicBarrier;
+    }
+
+    public static void setCountDownLatchForFinish(CountDownLatch countDownLatchForFinish) {
+        Car.countDownLatchForFinish = countDownLatchForFinish;
+    }
+
 }
