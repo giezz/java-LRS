@@ -1,9 +1,15 @@
 package giezz;
 
+import java.util.concurrent.Semaphore;
+
 public class Tunnel extends Stage {
-    public Tunnel() {
+
+    private final Semaphore semaphore;
+
+    public Tunnel(int maxCarInTunnel) {
         this.length = 80;
         this.description = "Тоннель " + length + " метров";
+        this.semaphore = new Semaphore(maxCarInTunnel);
     }
 
     @Override
@@ -11,8 +17,11 @@ public class Tunnel extends Stage {
         try {
             try {
                 System.out.println(car.getName() + " готовится к этапу(ждет): " + description);
+                semaphore.acquire();
                 System.out.println(car.getName() + " начал этап: " + description);
                 Thread.sleep(length / car.getSpeed() * 1000L);
+                semaphore.release();
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {

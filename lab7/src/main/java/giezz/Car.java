@@ -1,5 +1,8 @@
 package giezz;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
@@ -18,6 +21,8 @@ public class Car implements Runnable {
     private static CountDownLatch countDownLatchForFinish;
     private static CyclicBarrier cyclicBarrier;
     private static int carPositionOnFinish = 0;
+
+    private static HashMap<String, String> positionsOnFinish = new LinkedHashMap<>();
 
 
     public String getName() {
@@ -57,16 +62,17 @@ public class Car implements Runnable {
                 carPositionOnFinish++;
                 switch (carPositionOnFinish) {
                     case 1:
-                        System.out.println(name + " WINNER");
+//                        System.out.println(name + " WINNER");
+                        positionsOnFinish.put(name, "WINNER");
                         break;
                     case 2:
-                        System.out.println(name + " SECOND PLACE");
+//                        System.out.println(name + " SECOND PLACE");
+                        positionsOnFinish.put(name, "SECOND PLACE");
                         break;
                     case 3:
-                        System.out.println(name + " THIRD PLACE");
+//                        System.out.println(name + " THIRD PLACE");
+                        positionsOnFinish.put(name, "THIRD PLACE");
                         break;
-                    default:
-                        System.out.println(name + " position " + carPositionOnFinish);
                 }
             }
         }
@@ -83,6 +89,12 @@ public class Car implements Runnable {
 
     public static void setCountDownLatchForFinish(CountDownLatch countDownLatchForFinish) {
         Car.countDownLatchForFinish = countDownLatchForFinish;
+    }
+
+    public static void checkWinners() {
+        for (Map.Entry<String, String> stringStringEntry : positionsOnFinish.entrySet()) {
+            System.out.println(stringStringEntry);
+        }
     }
 
 }

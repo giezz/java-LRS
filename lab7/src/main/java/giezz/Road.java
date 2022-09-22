@@ -1,9 +1,9 @@
 package giezz;
 
 public class Road extends Stage {
-    public Road(int length) {
+    public Road(int length, String name) {
         this.length = length;
-        this.description = "Дорога " + length + " метров";
+        this.description = "Дорога " + name + " " + length + " метров";
     }
 
     @Override
