@@ -33,8 +33,6 @@ values (default, 'c0');
 insert into order_info (client_id, product_id)
 values (1, 1);
 
-SELECT * FROM order_info WHERE
-
 CREATE OR REPLACE FUNCTION order_info_insert() RETURNS TRIGGER AS
 $$
 BEGIN
