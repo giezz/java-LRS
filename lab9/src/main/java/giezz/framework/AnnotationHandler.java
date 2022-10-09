@@ -62,7 +62,7 @@ public abstract class AnnotationHandler {
             case "Enum":
                 return DataType.TEXT;
             default:
-                return null;
+                throw new RuntimeException("no datatype " + field.getType() + " yet");
         }
     }
 }

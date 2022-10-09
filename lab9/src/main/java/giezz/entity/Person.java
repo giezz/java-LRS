@@ -11,7 +11,7 @@ public class Person {
     private String name;
 
     @Column
-    private Gender gender;
+    private Enum<Gender> gender;
 
     public Person(int id, String name, Gender gender) {
         this.id = id;
@@ -40,7 +40,7 @@ public class Person {
     }
 
     public Gender getGender() {
-        return gender;
+        return (Gender) gender;
     }
 
     public void setGender(Gender gender) {
