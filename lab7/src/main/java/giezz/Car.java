@@ -49,7 +49,6 @@ public class Car implements Runnable {
             System.out.println(this.name + " готов");
             countDownLatch.countDown();
             cyclicBarrier.await();
-//            cyclicBarrier.reset();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,15 +61,12 @@ public class Car implements Runnable {
                 carPositionOnFinish++;
                 switch (carPositionOnFinish) {
                     case 1:
-//                        System.out.println(name + " WINNER");
                         positionsOnFinish.put(name, "WINNER");
                         break;
                     case 2:
-//                        System.out.println(name + " SECOND PLACE");
                         positionsOnFinish.put(name, "SECOND PLACE");
                         break;
                     case 3:
-//                        System.out.println(name + " THIRD PLACE");
                         positionsOnFinish.put(name, "THIRD PLACE");
                         break;
                 }
